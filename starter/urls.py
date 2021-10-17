@@ -17,15 +17,17 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework.authtoken import views as authtoken_views
 from rest_framework.routers import DefaultRouter
+
+from conquiztador.contrib.users.views import UserViewSet, ObtainAuthToken
+from conquiztador.contrib.questions.views import QuestionViewSet
 
 router = DefaultRouter()
 urlpatterns = i18n_patterns(
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
     path("api/auth/", include("rest_framework.urls")),
-    path("api/token/", authtoken_views.obtain_auth_token),
+    path("api/token/", ObtainAuthToken.as_view()),
 )
 
 if settings.DEBUG:
